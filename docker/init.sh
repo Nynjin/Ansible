@@ -5,6 +5,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+export VM_DEV="$2"
+export VM_PROD="$3"
+
 chmod 400 /app/.ssh/$1
 
 eval $(ssh-agent -s)
