@@ -53,4 +53,4 @@
         - configuration
 
   handlers:
-    - ansible.builtin.include_tasks: handlers.yml
+    - ansible.builtin.import_tasks: handler.yml
