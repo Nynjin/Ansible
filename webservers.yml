@@ -1,0 +1,56 @@
+---
+- hosts: webservers
+
+  become: true
+
+  pre_tasks:
+    - ansible.builtin.import_tasks: common.yml
+
+  tasks:
+    # NGINX
+    - name: Install Nginx web server
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+      tags:
+        - nginx
+        - installation
+
+    - name: Nginx status configuration file
+      ansible.builtin.copy:
+        src: nginx/status.conf
+        dest: /etc/nginx/conf.d/status.conf
+      notify:
+          - restart_nginx
+      tags:
+        - nginx
+        - configuration
+    
+    # CONFIG
+    - name: Set a hostname
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"
+    
+    # PHP
+    - name: Install PHP-FPM service
+      ansible.builtin.apt:
+        name: php-fpm
+        state: present
+      when: php.enabled
+      tags:
+        - php
+        - installation
+
+    - name: PHP-FPM > Configuration
+      ansible.builtin.template:
+        src: "php/app.ini.j2"
+        dest: "/etc/php/7.4/fpm/conf.d/app.ini"
+      notify:
+        - restart_php-fpm
+      when: php.enabled
+      tags:
+        - php
+        - configuration
+
+  handlers:
+    - ansible.builtin.include_tasks: handlers.yml

@@ -12,4 +12,5 @@ chmod 400 /app/.ssh/$1
 
 eval $(ssh-agent -s)
 ssh-add /app/.ssh/$1
+ansible-playbook main.yml -i inventories
 bash -i

@@ -1,0 +1,5 @@
+stage: production
+workshop_motd_scripts:
+  - file: 10-message
+    template: script/{{ stage }}.j2
+    message: "Welcome to the production environment"

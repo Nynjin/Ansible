@@ -1,0 +1,19 @@
+---
+- hosts: dbservers
+
+  become: true
+
+  pre_tasks:
+    - ansible.builtin.import_tasks: common.yml
+
+  tasks:
+    # NGINX
+    - name: Install MariaDB server
+      ansible.builtin.apt:
+        name: mariadb-server
+        state: present
+      tags:
+        - db
+
+  handlers:
+    - ansible.builtin.include_tasks: handlers.yml
