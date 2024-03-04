@@ -3,9 +3,10 @@
 
   become: true
 
-  vars:
-    mysql_db: '{{ lookup("ansible.builtin.env", "DB_NAME") }}'
-    mysql_root_password: '{{ lookup("ansible.builtin.env", "DB_PASSWORD") }}'
+  roles:
+    - role: mysql
+      tags:
+        - db
 
   pre_tasks:
     - name: Install MySQL and dependencies
@@ -15,67 +16,3 @@
        update_cache: yes
       tags:
         - db
-
-    - ansible.builtin.import_tasks: common.yml
-
-  tasks:
-    # MariaDB
-    - name: Install MariaDB server
-      ansible.builtin.apt:
-        name: mariadb-server
-        state: present
-      tags:
-        - db
-
-    - name: Update root user password
-      mysql_user:
-        name: root
-        password: '{{ mysql_root_password }}'
-        check_implicit_admin: true
-        column_case_sensitive: true
-        login_unix_socket: /var/run/mysqld/mysqld.sock
-      tags:
-        - db
-
-    - name: Update .my.cnf
-      ansible.builtin.template:
-        src: "db/client.my.cnf.j2"
-        dest: "/root/.my.cnf"
-        owner: root
-        group: root
-        mode: 0600
-      tags:
-        - db
-
-    - name: Remove anonymous users
-      mysql_user:
-        user: ""
-        state: absent
-        column_case_sensitive: true
-      tags:
-        - db
-    
-    - name: Creating Database
-      mysql_db:
-        name: '{{ mysql_db }}'
-        state: present
-      tags:
-        - db
-
-    - name: Import sample data
-      ansible.builtin.copy:
-        src: "data/dump.sql"
-        dest: "/tmp/dump.sql"
-      tags:
-        - db
-    
-    - name: Insert sample data
-      mysql_db:
-        name: testdb
-        target: "/tmp/dump.sql"
-        state: import
-      tags:
-        - db
-        
-  handlers:
-    - ansible.builtin.import_tasks: handler.yml

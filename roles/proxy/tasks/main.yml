@@ -1,0 +1,10 @@
+- name: copy proxy config
+  ansible.builtin.copy:
+    src: proxy_iut.sh
+    dest: proxy_iut.sh
+    owner: debian
+    mode: '0744'
+
+- name: run proxy config
+  ansible.builtin.shell:
+    cmd: ./proxy_iut.sh

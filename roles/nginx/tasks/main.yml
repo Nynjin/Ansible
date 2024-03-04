@@ -1,0 +1,18 @@
+---
+- name: Install Nginx web server
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  tags:
+    - nginx
+    - installation
+
+- name: Nginx configuration file
+  ansible.builtin.copy:
+    src: default
+    dest: /etc/nginx/sites-available/default
+  notify:
+      - restart_nginx
+  tags:
+    - nginx
+    - configuration

@@ -1,0 +1,4 @@
+---
+mysql_host: localhost
+mysql_db: '{{ lookup("ansible.builtin.env", "DB_NAME") }}'
+mysql_root_password: '{{ lookup("ansible.builtin.env", "DB_PASSWORD") }}'
