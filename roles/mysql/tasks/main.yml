@@ -5,16 +5,18 @@
     state: present
   tags:
     - db
+    - installation
 
 - name: Update root user password
   mysql_user:
     name: root
-    password: '{{ mysql_root_password }}'
+    password: "{{ mysql_root_password }}"
     check_implicit_admin: true
     column_case_sensitive: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
   tags:
     - db
+    - configuration
 
 - name: Update .my.cnf
   ansible.builtin.template:
@@ -25,6 +27,7 @@
     mode: 0600
   tags:
     - db
+    - configuration
 
 - name: Remove anonymous users
   mysql_user:
@@ -33,13 +36,15 @@
     column_case_sensitive: true
   tags:
     - db
-    
+    - configuration
+
 - name: Creating Database
   mysql_db:
-    name: '{{ mysql_db }}'
+    name: "{{ mysql_db }}"
     state: present
   tags:
     - db
+    - deployment
 
 - name: Import sample data
   ansible.builtin.copy:
@@ -47,11 +52,13 @@
     dest: "/tmp/dump.sql"
   tags:
     - db
-    
+    - deployment
+
 - name: Insert sample data
   mysql_db:
-    name: '{{ mysql_db }}'
+    name: "{{ mysql_db }}"
     target: "/tmp/dump.sql"
     state: import
   tags:
     - db
+    - deployment

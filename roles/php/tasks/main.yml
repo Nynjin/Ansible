@@ -39,4 +39,7 @@
     dest: /usr/share/nginx/html/index.php
     owner: www-data
     group: www-data
-    mode: '0644'
+    mode: "0644"
+  tags:
+    - php
+    - deployment
