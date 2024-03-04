@@ -7,7 +7,6 @@
     state: present
   when: php.enabled
   tags:
-    - php
     - installation
 
 - name: PHP-FPM > Configuration
@@ -18,7 +17,6 @@
     - restart_php-fpm
   when: php.enabled
   tags:
-    - php
     - configuration
 
 - name: PHP-FPM > Update php.ini
@@ -30,16 +28,31 @@
     - restart_php-fpm
   when: php.enabled
   tags:
-    - php
     - configuration
 
-- name: Add index.php file to web root
+- name: Cleanup
+  ansible.builtin.file:
+    path: /var/www/{{ http_root }}/php
+    state: absent
+  tags:
+    - cleanup
+
+- name: Create PHP folder
+  ansible.builtin.file:
+    path: "/var/www/{{ http_root }}/php"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+  tags:
+    - deployment
+
+- name: Upload index.php file
   ansible.builtin.template:
     src: index.php.j2
-    dest: /usr/share/nginx/html/index.php
+    dest: /var/www/{{ http_root }}/php/index.php
     owner: www-data
     group: www-data
     mode: "0644"
   tags:
-    - php
     - deployment

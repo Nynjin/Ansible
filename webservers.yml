@@ -4,12 +4,9 @@
   become: true
 
   roles:
-    - role: nginx
-      tags:
-        - nginx
-    - role: php
-      tags:
-        - php
+    - nginx
+    - php
+    - wordpress
 
   tasks:
     # CONFIG

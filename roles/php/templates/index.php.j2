@@ -2,8 +2,8 @@
 try {
     $pdo = new PDO(
         'mysql:host={{ mysql_host }};port=3306;dbname={{ mysql_db }}',
-        'root',
-        '{{ mysql_root_password }}'
+        '{{ mysql_user }}',
+        '{{ mysql_password }}'
     );
 
     $statement = $pdo->prepare("SELECT * FROM students");
