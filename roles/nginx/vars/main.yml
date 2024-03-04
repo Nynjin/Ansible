@@ -1,0 +1,2 @@
+---
+http_root: '{{ lookup("ansible.builtin.env", "HTTP_ROOT") }}'
