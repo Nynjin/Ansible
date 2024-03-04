@@ -8,8 +8,8 @@
     - installation
 
 - name: Nginx configuration file
-  ansible.builtin.copy:
-    src: default
+  ansible.builtin.template:
+    src: default.j2
     dest: /etc/nginx/sites-available/default
   notify:
       - restart_nginx

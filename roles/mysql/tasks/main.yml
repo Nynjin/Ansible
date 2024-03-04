@@ -50,7 +50,7 @@
     
 - name: Insert sample data
   mysql_db:
-    name: testdb
+    name: '{{ mysql_db }}'
     target: "/tmp/dump.sql"
     state: import
   tags:
