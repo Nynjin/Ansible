@@ -1,0 +1,32 @@
+<?php
+try {
+    $pdo = new PDO(
+        'mysql:host={{ mysql_host }};port=3306;dbname={{ mysql_db }}',
+        'root',
+        '{{ mysql_root_password }}'
+    );
+
+    $statement = $pdo->prepare("SELECT * FROM students");
+
+    $statement->execute();
+
+    $students = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<p>Hello World !!!</p>";
+
+    echo "<h1>Liste des étudiants</h1>";
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>Prénom</th><th>Nom</th></tr>";
+    foreach ($students as $student) {
+        echo "<tr>";
+        echo "<td>".$student['id']."</td>";
+        echo "<td>".$student['first_name']."</td>";
+        echo "<td>".$student['last_name']."</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
+} catch(PDOException $e) {
+    echo "Erreur de connexion à la base de données : " . $e->getMessage();
+}
+?>

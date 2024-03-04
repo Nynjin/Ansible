@@ -1,0 +1,45 @@
+---
+- name: Install PHP-FPM service
+  ansible.builtin.apt:
+    name:
+      - php-fpm
+      - php-mysql
+    state: present
+  when: php.enabled
+  tags:
+    - php
+    - installation
+
+- name: PHP-FPM > Configuration
+  ansible.builtin.template:
+    src: "app.ini.j2"
+    dest: "/etc/php/7.4/fpm/conf.d/app.ini"
+  notify:
+    - restart_php-fpm
+  when: php.enabled
+  tags:
+    - php
+    - configuration
+
+- name: PHP-FPM > Update php.ini
+  lineinfile:
+    dest: /etc/php/7.4/fpm/php.ini
+    regexp: "^;extension=pdo_mysql"
+    line: "extension=pdo_mysql"
+  notify:
+    - restart_php-fpm
+  when: php.enabled
+  tags:
+    - php
+    - configuration
+
+- name: Add index.php file to web root
+  ansible.builtin.template:
+    src: index.php.j2
+    dest: /usr/share/nginx/html/index.php
+    owner: www-data
+    group: www-data
+    mode: "0644"
+  tags:
+    - php
+    - deployment

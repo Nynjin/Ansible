@@ -1,0 +1,4 @@
+---
+- name: Updating APT cache index
+  ansible.builtin.apt:
+    update_cache: yes

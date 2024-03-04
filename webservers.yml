@@ -1,0 +1,18 @@
+---
+- hosts: webservers
+
+  become: true
+
+  roles:
+    - role: nginx
+      tags:
+        - nginx
+    - role: php
+      tags:
+        - php
+
+  tasks:
+    # CONFIG
+    - name: Set a hostname
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"
