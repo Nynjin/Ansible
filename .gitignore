@@ -1,0 +1,7 @@
+# Cache
+.docker
+
+# Environment
+.env
+.ssh/*
+!.gitkeep

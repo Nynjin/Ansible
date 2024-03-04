@@ -1,0 +1,3 @@
+- ansible.builtin.import_playbook: proxy.yml
+- ansible.builtin.import_playbook: webservers.yml
+- ansible.builtin.import_playbook: dbservers.yml
