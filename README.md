@@ -1,7 +1,9 @@
 # Ansible-project
 
-Ce projet Git permet de configurer des machines distances à l'aide d'Ansible afin de déployer une application php.
-L'architecture est entièrement dockerisé avec l'implémentation de scripts permettant d'automatiser l'intégralité du processus.
+Ce projet Git permet de configurer des machines distances à l'aide d'Ansible afin de déployer une application php et WordPress avec mySQL et un reverse proxy Nginx.
+
+L'architecture est automatisée avec l'implémentation de scripts permettant d'exécuter l'intégralité du processus à l'aide d'une seule commande.
+
 Vous serez connecté au terminal de votre environnement docker où il vous sera possible de travailler avec les commandes Ansible.
 
 ## Getting started
@@ -25,6 +27,13 @@ Vous serez connecté au terminal de votre environnement docker où il vous sera 
    ```bash
    ansible-playbook main.yml -i inventories --tags [tags_à_exécuter] --skip-tags [tags_à_ignorer]
    ```
+
+   tags possibles:
+
+   - installation
+   - configuration
+   - deployment
+   - cleanup
 
 7. Avec la configuration actuelle, deux routes sont disponibles :
 
