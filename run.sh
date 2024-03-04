@@ -15,7 +15,10 @@ required_vars=(
     "VM_DEV"
     "VM_PROD"
     "DB_NAME"
+    "DB_ROOT_PASSWORD"
+    "DB_USER"
     "DB_PASSWORD"
+    "HTTP_ROOT"
 )
 
 # Check if each required variable is defined
@@ -54,4 +57,4 @@ fi
 
 # Launch docker container
 docker compose -f "$init_dir/docker-compose.yml" up --build -d
-docker-compose exec ansible bash -c "bash /app/docker/init.sh $mode $SSH_KEY $VM_DEV $VM_PROD $DB_NAME $DB_PASSWORD"
+docker-compose exec ansible bash -c "bash /app/docker/init.sh $mode $SSH_KEY $VM_DEV $VM_PROD $HTTP_ROOT $DB_NAME $DB_ROOT_PASSWORD $DB_USER $DB_PASSWORD"

@@ -4,15 +4,30 @@
     name: nginx
     state: present
   tags:
-    - nginx
     - installation
+
+- name: Create document root
+  file:
+    path: "/var/www/{{ http_root }}"
+    state: directory
+    owner: "www-data"
+    group: "www-data"
+    mode: "0755"
+  tags:
+    - configuration
 
 - name: Nginx configuration file
   ansible.builtin.template:
     src: default.j2
     dest: /etc/nginx/sites-available/default
   notify:
-      - restart_nginx
+    - restart_nginx
   tags:
-    - nginx
     - configuration
+
+- name: Reload Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+  tags:
+    - deployment

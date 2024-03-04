@@ -1,15 +1,18 @@
 #!/bin/bash
 
 # Check if correct number of arguments
-if [ ! $# -eq 6 ]; then
+if [ ! $# -eq 9 ]; then
     echo "Missing environment values"
     exit 1
 fi
 
 export VM_DEV="$3"
 export VM_PROD="$4"
-export DB_NAME="$5"
-export DB_PASSWORD="$6"
+export HTTP_ROOT="$5"
+export DB_NAME="$6"
+export DB_ROOT_PASSWORD="$7"
+export DB_USER="$8"
+export DB_PASSWORD="$9"
 
 chmod 400 /app/.ssh/$2
 

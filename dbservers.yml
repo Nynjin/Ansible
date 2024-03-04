@@ -4,15 +4,4 @@
   become: true
 
   roles:
-    - role: mysql
-      tags:
-        - db
-
-  pre_tasks:
-    - name: Install MySQL and dependencies
-      ansible.builtin.package:
-        name: python3-mysqldb
-        state: present
-        update_cache: yes
-      tags:
-        - db
+    - mysql

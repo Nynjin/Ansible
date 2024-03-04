@@ -1,10 +1,17 @@
 ---
+- name: Install MySQL and dependencies
+  ansible.builtin.package:
+    name: python3-mysqldb
+    state: present
+    update_cache: yes
+  tags:
+    - installation
+
 - name: Install MariaDB server
   ansible.builtin.apt:
     name: mariadb-server
     state: present
   tags:
-    - db
     - installation
 
 - name: Update root user password
@@ -15,18 +22,16 @@
     column_case_sensitive: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
   tags:
-    - db
     - configuration
 
 - name: Update .my.cnf
   ansible.builtin.template:
-    src: "client.my.cnf.j2"
+    src: "my.cnf.j2"
     dest: "/root/.my.cnf"
     owner: root
     group: root
     mode: 0600
   tags:
-    - db
     - configuration
 
 - name: Remove anonymous users
@@ -35,15 +40,38 @@
     state: absent
     column_case_sensitive: true
   tags:
-    - db
     - configuration
 
-- name: Creating Database
+- name: Delete MySQL user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    state: absent
+    column_case_sensitive: true
+  tags:
+    - cleanup
+
+- name: Create MySQL user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: "{{ mysql_db }}.*:ALL"
+    state: present
+    column_case_sensitive: true
+  tags:
+    - deployment
+
+- name: Delete Database
+  mysql_db:
+    name: "{{ mysql_db }}"
+    state: absent
+  tags:
+    - cleanup
+
+- name: Create Database
   mysql_db:
     name: "{{ mysql_db }}"
     state: present
   tags:
-    - db
     - deployment
 
 - name: Import sample data
@@ -51,7 +79,6 @@
     src: "data/dump.sql"
     dest: "/tmp/dump.sql"
   tags:
-    - db
     - deployment
 
 - name: Insert sample data
@@ -60,5 +87,4 @@
     target: "/tmp/dump.sql"
     state: import
   tags:
-    - db
     - deployment
