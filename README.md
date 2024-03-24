@@ -1,5 +1,17 @@
 # Ansible-project
 
+<div align="center">
+  <a href="https://github.com/Nynjin/Ansible/releases/latest"><img alt="Latest Release" src="https://img.shields.io/github/v/release/Nynjin/Ansible?label=Latest%20Release&logo=github"></a>
+  <a href="https://github.com/Nynjin/Ansible/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/Nynjin/Ansible"></a>
+  <a href="https://github.com/Nynjin/Ansible/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT"></a>
+</div>
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=ansible,openstack,php,wordpress,mysql,docker" />
+  </a>
+</p>
+
 Ce projet Git permet de configurer des machines distances à l'aide d'Ansible afin de déployer une application php et WordPress avec mySQL et un reverse proxy Nginx.
 
 L'architecture est automatisée avec l'implémentation de scripts permettant d'exécuter l'intégralité du processus à l'aide d'une seule commande.
