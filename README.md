@@ -3,7 +3,7 @@
 <div align="center">
   <a href="https://github.com/Nynjin/Ansible/releases/latest"><img alt="Latest Release" src="https://img.shields.io/github/v/release/Nynjin/Ansible?label=Latest%20Release&logo=github"></a>
   <a href="https://github.com/Nynjin/Ansible/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/Nynjin/Ansible"></a>
-  <a href="https://github.com/Nynjin/Ansible/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT"></a>
+  <a href="https://github.com/Nynjin/Ansible/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Nynjin/Ansible"></a>
 </div>
 
 <p align="center">
